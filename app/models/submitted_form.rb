@@ -1,0 +1,2 @@
+class SubmittedForm < ApplicationRecord
+end

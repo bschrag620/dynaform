@@ -1,0 +1,2 @@
+class FormInput < ApplicationRecord
+end
