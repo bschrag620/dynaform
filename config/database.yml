@@ -80,12 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: dynaform_production
-  username: dynaform
-  password: <%= ENV['DYNAFORM_DATABASE_PASSWORD'] %>
-
-staging:
-  <<: *default
-  database: dynaform_staging
+  database: <%= ENV['RAILS_DB'] %>
   username: dynaform
   password: <%= ENV['DYNAFORM_DATABASE_PASSWORD'] %>
