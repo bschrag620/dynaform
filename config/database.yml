@@ -83,3 +83,9 @@ production:
   database: dynaform_production
   username: dynaform
   password: <%= ENV['DYNAFORM_DATABASE_PASSWORD'] %>
+
+staging:
+  <<: *default
+  database: dynaform_staging
+  username: dynaform
+  password: <%= ENV['DYNAFORM_DATABASE_PASSWORD'] %>
