@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+ .is-error {
+   color: red;
+ }
+
+ .form-group {
+   padding: 0em 0em 1em 0em;
+ }

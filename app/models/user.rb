@@ -2,10 +2,17 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :email,
-    format: { with: URI::MailTo::EMAIL_REGEXP, message: "Email invalid"  },
+    format: { with: URI::MailTo::EMAIL_REGEXP, message: "invalid"  },
     uniqueness: { case_sensitive: false },
     length: { minimum: 4, maximum: 254 },
     presence: true
+
+  validates :password,
+    presence: true,
+    length: { minimum: 8, maximum: 254 }
+
+  validates_confirmation_of :password
+  validates_presence_of :password_confirmation, if: :password_digest_changed?
 
   has_many :sessions
 
@@ -39,8 +46,8 @@ class User < ApplicationRecord
   #
   # @return [void]
   #
-  def logout!(session_id, all_sessions: false)
-    qry = all_sessions ? sessions.valid : sessions.where(id: session_id)
+  def logout!(all_sessions: false)
+    qry = all_sessions ? Current.user.sessions.valid : sessions.where(id: Current.session.id)
     qry.update_all(expires_at: Time.now)
   end
 end
