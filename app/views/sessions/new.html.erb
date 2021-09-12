@@ -1,12 +1,23 @@
-<h2>Login</h2>
-<%= form_tag '/login' do %>
-  <div class="form-group">
-    <%= label_tag :email%><br>
-    <%= text_field_tag :email, "", class: "form-control" %><br>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-4 col-center">
+      <h2>Login</h2>
+      <div class="card card-body">
+        <%= form_tag '/login' do %>
+          <div class="form-group">
+            <%= label_tag :email, "Email", class: 'input-title' %><br>
+            <%= text_field_tag :email, "", class: "form-control" %><br>
+          </div>
+          <div class="form-group">
+            <%= label_tag :password, "Password", class: 'input-title' %><br>
+            <%= password_field_tag :password, "", class: "form-control" %><br>
+          </div>
+          <%= submit_tag "Login"%>
+        </div>
+      <%end%>
+      <div class="text-center">
+        <%= link_to "Create account", signup_url %>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <%= label_tag :password%><br>
-    <%= text_field_tag :password, "", class: "form-control" %><br>
-  </div>
-  <%= submit_tag "Login"%>
-<%end%>
+</div>

@@ -1,43 +1,13 @@
-<h2>Signup</h2>
-
-<%= form_for @user, as: :user, url: signup_url do |f|%>
-  <div class="form-group">
-    <% invalid = @user.errors.include?(:email) %>
-    <%= f.label :email%><br>
-    <%= f.text_field :email, class: "form-control #{'is-invalid' if invalid}" %><br>
-    <% if invalid %>
-      <div class="invalid-feedback is-error">
-        <% @user.errors.full_messages_for(:email).each do |error_message| %>
-          <%= error_message %>.<br>
-        <% end %>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-4 col-center">
+      <h2>Signup</h2>
+      <%= turbo_frame_tag dom_id(@user) do %>
+        <%= render partial: "users/form", locals: {user: @user} %>
+      <% end %>
+      <div class="text-center">
+        Already have an account? <%= link_to "Log in ", login_url %>here!
       </div>
-    <% end %>
+    </div>
   </div>
-
-  <div class="form-group">
-    <% invalid = @user.errors.include?(:password) %>
-    <%= f.label :password%><br>
-    <%= f.password_field :password, class: "form-control #{'is-invalid' if invalid}" %><br>
-    <% if invalid %>
-      <div class="invalid-feedback is-error">
-        <% @user.errors.full_messages_for(:password).each do |error_message| %>
-          <%= error_message %>.<br>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <% invalid = @user.errors.include?(:password_confirmation) %>
-    <%= f.label :password_confirmation%><br>
-    <%= f.password_field :password_confirmation, class: "form-control #{'is-invalid' if invalid}" %><br>
-    <% if invalid %>
-      <div class="invalid-feedback is-error">
-        <% @user.errors.full_messages_for(:password_confirmation).each do |error_message| %>
-          <%= error_message %>.<br>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <%= f.submit %>
-<%end%>
+</div>

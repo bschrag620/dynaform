@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_225011) do
+ActiveRecord::Schema.define(version: 2021_09_12_075519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -29,13 +29,13 @@ ActiveRecord::Schema.define(version: 2021_09_12_225011) do
   create_table "form_inputs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label"
     t.string "helper_text"
+    t.string "dyna_form_id"
+    t.string "input_type_id"
     t.integer "display_order"
     t.boolean "required", default: false
     t.text "additional_attributes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "dyna_form_id"
-    t.uuid "input_type_id"
     t.index ["dyna_form_id"], name: "index_form_inputs_on_dyna_form_id"
   end
 
@@ -67,9 +67,9 @@ ActiveRecord::Schema.define(version: 2021_09_12_225011) do
   end
 
   create_table "submitted_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "dyna_form_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.uuid "dyna_form_id"
     t.index ["dyna_form_id"], name: "index_submitted_forms_on_dyna_form_id"
   end
 

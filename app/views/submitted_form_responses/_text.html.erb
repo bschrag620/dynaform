@@ -1,0 +1,5 @@
+<% sample ||= false %>
+<div class="form-group">
+  <%= render partial: "submitted_form_responses/label_and_helper", locals: {form_input: submitted_form_response.form_input} %>
+  <%= text_field_tag submitted_form_response.id, submitted_form_response.value, class: "form-control", required: submitted_form_response.form_input.required, disabled: sample %>
+</div>

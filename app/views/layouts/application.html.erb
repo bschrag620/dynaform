@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <div class="container">
+        <a class="navbar-brand">&nbsp;</a>
+        <%= button_to "Logout", logout_url, class: 'form-control', method: :delete if Current.user %>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

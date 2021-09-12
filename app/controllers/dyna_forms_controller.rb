@@ -3,17 +3,23 @@ class DynaFormsController < ApplicationController
   def new
   end
 
+  def details
+    @dyna_form = Current.user.dyna_forms.find(params[:id])
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "dyna_form_window",
+          partial: "dyna_forms/dyna_form_with_inputs",
+          locals: {dyna_form: @dyna_form}
+        )}
+    end
+  end
+
   def create
     @dyna_form = Current.user.dyna_forms.create(dyna_form_params)
     respond_to do |format|
       if @dyna_form.save
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(
-            "new_dyna_form",
-            partial: "dyna_forms/form",
-            locals: {dyna_form: @dyna_form}
-          )
-        }
+        format.turbo_stream {render layout: false}
       else
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(

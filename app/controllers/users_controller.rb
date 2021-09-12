@@ -14,7 +14,14 @@ class UsersController < ApplicationController
 
       redirect_to root_url
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            @user,
+            partial: "users/new",
+            locals:
+          )}
+      end
     end
   end
 

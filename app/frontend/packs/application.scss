@@ -1,2 +1,22 @@
 // Import Bootstrap v5
 @import "~bootstrap/scss/bootstrap";
+
+.post-input-hint {
+  position: relative;
+  top: -1.5em;
+  font-size: 1em;
+}
+
+.clickable:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+.col-center {
+  margin: auto;
+}
+
+ .input-title {
+   font-size: 1.5em;
+   font-weight: 500;
+ }

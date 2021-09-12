@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_many :dyna_forms
 
+  has_many :form_inputs, through: :dyna_forms
+
   #
   # Checks if the session is valid for the user
   #
