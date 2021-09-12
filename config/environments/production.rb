@@ -1,4 +1,9 @@
 Rails.application.configure do
+  # redis config options for heroku per heroku guide:
+  # https://blog.heroku.com/real_time_rails_implementing_websockets_in_rails_5_with_action_cable#deploying-our-application-to-heroku
+  config.web_socket_server_url = "wss://staging-dynaform.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = ['https://staging-dynaform.herokuapp.com', 'http://staging-dynaform.herokuapp.com']
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
