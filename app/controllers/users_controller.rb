@@ -6,7 +6,6 @@ class UsersController < ApplicationController
 
   # create user and sign them in
   def create
-    binding.pry
     @user = User.create(user_create_params)
     if @user.save
       user_session = @user.login!
