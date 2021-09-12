@@ -1,13 +1,29 @@
-<h1>Welcome to DynaForm!</h1>
-
 <%= turbo_stream_from "dyna_forms" %>
 
-<%= turbo_frame_tag "dyna_forms" do %>
-  <%= render @dyna_forms %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1>My DynaForm Manager</h1>
+    </div>
+  </div>
 
-<% if Current.user %>
-  <%= turbo_frame_tag "dyna_form_form" do %>
-    <%= render "dyna_forms/form", dyna_form: @dyna_form %>
-  <% end %>
-<% end %>
+  <div class="row">
+    <div class="col-lg-6 vertical-scroll">
+      <div class="container pt-5">
+        <h2>Create new DynaForm</h2>
+        <%= turbo_frame_tag "dyna_form_form" do %>
+          <%= render "dyna_forms/form", dyna_form: @dyna_form %>
+        <% end %>
+      </div>
+
+
+      <div class="container pt-5">
+        <h2>My DynaForms</h2>
+        <%= turbo_frame_tag "dyna_forms" do %>
+          <%= render @dyna_forms %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

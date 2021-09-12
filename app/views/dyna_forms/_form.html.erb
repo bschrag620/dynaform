@@ -1,6 +1,7 @@
-<%= form_with(model: dyna_form, id: dom_id(dyna_form)) do |f| %>
-  <h2>Create a New DynaForm</h2>
-  <%= render partial: "form_elements/text_field_input", locals: {obj: dyna_form, field: :title, form_obj: f} %>
-  <%= render partial: "form_elements/text_field_input", locals: {obj: dyna_form, field: :description, form_obj: f} %>
-  <%= f.submit "Save and exit" %>
-<% end %>
+<div class="card card-body">
+  <%= form_with(model: dyna_form, id: dom_id(dyna_form)) do |f| %>
+    <%= render partial: "form_elements/text_field_input", locals: {obj: dyna_form, field: :title, form_obj: f} %>
+    <%= render partial: "form_elements/text_area_input", locals: {obj: dyna_form, field: :description, form_obj: f} %>
+    <%= f.submit "Save and exit" %>
+  <% end %>
+</div>
