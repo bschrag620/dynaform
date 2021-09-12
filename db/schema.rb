@@ -10,33 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_11_125730) do
+ActiveRecord::Schema.define(version: 2021_09_12_225011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "dyna_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
     t.string "title"
     t.text "description"
     t.boolean "published", default: false
     t.boolean "editable", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
   end
 
   create_table "form_inputs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "label"
     t.string "helper_text"
-    t.string "user_form_id"
-    t.string "input_type_id"
     t.integer "display_order"
     t.boolean "required", default: false
     t.text "additional_attributes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_form_id"], name: "index_form_inputs_on_user_form_id"
+    t.uuid "dyna_form_id"
+    t.uuid "input_type_id"
+    t.index ["dyna_form_id"], name: "index_form_inputs_on_dyna_form_id"
   end
 
   create_table "input_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -49,28 +49,28 @@ ActiveRecord::Schema.define(version: 2021_09_11_125730) do
   end
 
   create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_id"
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "user_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "submitted_form_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "submitted_form_id"
-    t.string "form_input_id"
     t.text "value"
     t.string "additional_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "submitted_form_id"
+    t.uuid "form_input_id"
     t.index ["submitted_form_id"], name: "index_submitted_form_responses_on_submitted_form_id"
   end
 
   create_table "submitted_forms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "user_form_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_form_id"], name: "index_submitted_forms_on_user_form_id"
+    t.uuid "dyna_form_id"
+    t.index ["dyna_form_id"], name: "index_submitted_forms_on_dyna_form_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

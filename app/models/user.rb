@@ -36,7 +36,7 @@ class User < ApplicationRecord
   #
   def login!
     Current.session = Session.create!(user: self, expires_at: 1.week.from_now)
-
+    Current.user = Current.session.user
     Current.session
   end
 
