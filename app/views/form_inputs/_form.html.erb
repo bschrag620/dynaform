@@ -1,0 +1,7 @@
+<%= form_with(model: [dyna_form, form_input], id: dom_id(form_input)) do |f| %>
+  <%= render partial: "form_elements/text_field_input", locals: {obj: form_input, field: :label, form_obj: f} %>
+  <%= render partial: "form_elements/text_field_input", locals: {obj: form_input, field: :helper_text, form_obj: f} %>
+  <%= options_for_select(Current.input_types.map { |input_type| [input_type.label, input_type.id] }) %>
+  <%= f.checkbox :required %>
+  <%= f.submit "Save" %>
+<% end %>

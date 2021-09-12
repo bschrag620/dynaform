@@ -1,3 +1,3 @@
 class InputType < ApplicationRecord
-  belongs_to :user_form
+  belongs_to :dyna_form
 end

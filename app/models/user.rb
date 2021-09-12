@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   has_many :sessions
 
-  has_many :user_forms
+  has_many :dyna_forms
 
   #
   # Checks if the session is valid for the user
@@ -35,7 +35,9 @@ class User < ApplicationRecord
   # @return [Session]
   #
   def login!
-    Session.create!(user: self, expires_at: 1.week.from_now)
+    Current.session = Session.create!(user: self, expires_at: 1.week.from_now)
+
+    Current.session
   end
 
   #

@@ -8,4 +8,8 @@ Rails.application.routes.draw do
 
   get "/signup", to: "users#new", as: "signup"
   post "/signup", to: "users#create"
+
+  resources :dyna_forms do
+    resources :form_inputs
+  end
 end

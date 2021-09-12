@@ -1,1 +1,13 @@
 <h1>Welcome to DynaForm!</h1>
+
+<%= turbo_stream_from "dyna_forms" %>
+
+<%= turbo_frame_tag "dyna_forms" do %>
+  <%= render @dyna_forms %>
+<% end %>
+
+<% if Current.user %>
+  <%= turbo_frame_tag "dyna_form_form" do %>
+    <%= render "dyna_forms/form", dyna_form: @dyna_form %>
+  <% end %>
+<% end %>

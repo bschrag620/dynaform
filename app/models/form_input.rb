@@ -1,5 +1,5 @@
 class FormInput < ApplicationRecord
-  belongs_to :user_form
+  belongs_to :dyna_form
 
   has_many :submitted_form_responses
 end
