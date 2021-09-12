@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :redirect_if_not_logged_in
   # signup_url
   def new
     @user ||= User.new

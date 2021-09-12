@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :redirect_if_not_logged_in, except: :delete
   # login_url
   def new
   end
@@ -19,6 +20,7 @@ class SessionsController < ApplicationController
   # logs the user out
   def delete
     Current.user.logout!
+    session.delete(:current_session_id)
 
     redirect_to root_url
   end
