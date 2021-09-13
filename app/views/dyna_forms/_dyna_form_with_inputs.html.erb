@@ -23,7 +23,7 @@
         <div class="col-lg-12">
           <div class="card card-body">
             <h4>Add inputs to DynaForm <%= dyna_form.title %></h4>
-            <% form_input = FormInput.new(dyna_form_id: dyna_form.id, input_type_id: Current.input_types.first.id) %>
+            <% form_input = FormInput.new(dyna_form_id: dyna_form.id, input_type_id: Current.ordered_input_types.first.id) %>
             <% submitted_form_response = SubmittedFormResponse.new(form_input: form_input) %>
             <%= render partial: "form_inputs/form", locals: {form_input: form_input, dyna_form: dyna_form, submitted_form_response: submitted_form_response} %>
           </div>

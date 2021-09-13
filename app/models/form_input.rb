@@ -13,7 +13,6 @@ class FormInput < ApplicationRecord
       partial: 'form_inputs/sample', locals: {form_input: self, submitted_form_response: SubmittedFormResponse.new(form_input_id: id)}
     )
   end
-  # after_update_commit { broadcast_replace_to "dyna_forms" }
   after_destroy_commit do
     broadcast_remove_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "form_input_#{id}_sample"

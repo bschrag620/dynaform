@@ -28,12 +28,7 @@
     <%= turbo_stream_from "user_#{Current.user.id}_dyna_form_window" %>
     <div class="container pt-5">
       <h2>Details</h2>
-      <% if @dyna_form.persisted? %>
-        <%= render partial: 'dyna_forms/dyna_form_with_inputs', locals: {dyna_form: @dyna_form} %>
-      <% else %>
-        <%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" do %>
-        <% end %>
-      <% end %>
+      <%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" %>
     </div>
   </div>
 </div>

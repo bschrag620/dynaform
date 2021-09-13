@@ -4,6 +4,7 @@ class FormInputsController < ApplicationController
   def create
     @form_input = FormInput.new(form_input_params)
     @form_input.dyna_form_id = params[:dyna_form_id]
+    @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
     respond_to do |format|
       if params[:sample]
         format.turbo_stream {
@@ -13,7 +14,7 @@ class FormInputsController < ApplicationController
             locals: {form_input: @form_input, submitted_form_response: @submitted_form_response}
           )}
       elsif @form_input.save
-        @form_input = FormInput.new(input_type_id: Current.input_types.first.id)
+        @form_input = FormInput.new(input_type_id: Current.ordered_input_types.first.id)
         @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(

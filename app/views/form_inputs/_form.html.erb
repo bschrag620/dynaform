@@ -10,12 +10,15 @@
 
       </div>
       <div class="col-sm-5">
-        <%= render partial: "form_elements/select_input", locals: {obj: form_input, field: :input_type_id, form_obj: f, options_for_select: Current.input_types.map { |input_type| [input_type.label, input_type.id] }, on_change: 'javascript:window.toggleAdditionalAttributes()'} %>
+        <%= render partial: "form_elements/select_input", locals: {obj: form_input, field: :input_type_id, form_obj: f, options_for_select: Current.ordered_input_types.map { |input_type| [input_type.label, input_type.id] }, on_change: 'javascript:window.toggleAdditionalAttributes()'} %>
         <%= render partial: "form_elements/check_box_input", locals: {obj: form_input, field: :required, form_obj: f} %>
         <%= render partial: "form_elements/text_field_input", locals: {obj: form_input, field: :additional_attributes, form_obj: f, disabled: !form_input.input_type.allows_additional_attributes?, hidden: !form_input.input_type.allows_additional_attributes?} %>
       </div>
     </div>
-    <%= f.button "Update preview", name: 'sample', value: true %>
-    <%= f.submit "Save" %>
+    <div class="button-row-container">
+      <%= f.button "Update preview", name: 'sample', value: true, class: 'button-row' %>
+      <%= f.submit "Save", class: 'button-row' %>
+    </div>
+    </div>
   <% end %>
 <% end %>

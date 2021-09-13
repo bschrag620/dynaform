@@ -16,7 +16,18 @@
   margin: auto;
 }
 
- .input-title {
+.input-title {
    font-size: 1.5em;
    font-weight: 500;
  }
+
+ .button-row-container {
+   padding: 1em 0em;
+ }
+
+.button-row {
+  width: auto;
+  float: right;
+  display: inline;
+  margin-left: .5em;
+}

@@ -4,7 +4,9 @@
     <p>
       <%= dyna_form.description %>
     </p>
-    <%= button_to "Delete", dyna_form, method: :delete %>
-    <%= button_to "See details", dyna_form_details_path(dyna_form) %>
+      <div class="button-row-container">
+        <%= button_to "Delete", {action: :destroy, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row", method: :delete} %>
+        <%= button_to "See details", {action: :details, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row"} %>
+      </div>
   </div>
 <% end %>
