@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :redirect_if_not_logged_in, except: :delete
+  before_action :redirect_if_logged_in, except: :delete
   # login_url
   def new
   end

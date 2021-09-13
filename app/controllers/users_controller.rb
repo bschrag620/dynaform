@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :redirect_if_not_logged_in
+  before_action :redirect_if_logged_in
   # signup_url
   def new
     @user ||= User.new
@@ -12,14 +13,16 @@ class UsersController < ApplicationController
       user_session = @user.login!
       session[:current_session_id] = user_session.id
 
-      redirect_to root_url
+      respond_to do |format|
+        format.turbo_stream { redirect_to root_url }
+      end
     else
       respond_to do |format|
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             @user,
-            partial: "users/new",
-            locals:
+            partial: "users/form",
+            locals: {user: @user}
           )}
       end
     end
