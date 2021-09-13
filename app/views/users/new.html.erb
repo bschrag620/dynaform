@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-lg-4 col-center">
       <h2>Signup</h2>
-      <%= turbo_frame_tag dom_id(@user) do %>
-        <%= render partial: "users/form", locals: {user: @user} %>
-      <% end %>
+      <%= render partial: "users/form", locals: {user: @user} %>
       <div class="text-center">
         Already have an account? <%= link_to "Log in ", login_url %>here!
       </div>

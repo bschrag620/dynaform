@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       session[:current_session_id] = user_session.id
 
       respond_to do |format|
-        format.turbo_stream { redirect_to root_url }
+        format.turbo_stream { redirect_to root_url, target: "_top" }
       end
     else
       respond_to do |format|
