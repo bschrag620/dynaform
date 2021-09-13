@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_action :redirect_if_not_logged_in, except: :delete
   before_action :redirect_if_logged_in, except: :delete
+
   # login_url
   def new
   end
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       user_session = @user.login!
       session[:current_session_id] = user_session.id
 
-      redirect_to root_url
+      redirect_to dashboard_url
     else
       redirect_to login_url
     end

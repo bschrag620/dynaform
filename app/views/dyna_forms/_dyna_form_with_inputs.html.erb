@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "dyna_form_window" do %>
+<%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" do %>
   <%= turbo_frame_tag dom_id(dyna_form) do %>
     <div class="card card-body">
       <div class="row">

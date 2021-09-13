@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::Base
-  before_action :set_current, :redirect_if_not_logged_in
+  before_action :set_current
 
   def index
-    @dyna_forms = Current.user.dyna_forms
-    @dyna_form = DynaForm.new
+    @dyna_forms = DynaForm.published
   end
 
   private
@@ -17,6 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_if_logged_in
-    redirect_to root_url if Current.session
+    redirect_to root_url if Current.user
   end
 end

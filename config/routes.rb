@@ -18,4 +18,6 @@ Rails.application.routes.draw do
     post 'form_inputs/sample', to: 'form_inputs#sample', as: "form_inputs_sample"
   end
 
+  get "/dashboard", to: "dashboard#index", as: "dashboard"
+
 end

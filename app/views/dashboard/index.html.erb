@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1>My DynaForm Dashboard</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6 vertical-scroll">
+    <%= turbo_stream_from "user_#{Current.user.id}_dyna_forms" %>
+    <div class="container pt-5">
+      <h2>Start a new DynaForm</h2>
+      <%= turbo_frame_tag "dyna_form_form" do %>
+        <%= render "dyna_forms/form", dyna_form: @dyna_form %>
+      <% end %>
+    </div>
+
+
+    <div class="container pt-5">
+      <h2>My DynaForms</h2>
+      <%= turbo_frame_tag "user_#{Current.user.id}_dyna_forms" do %>
+        <%= render @dyna_forms %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-lg-6 vertical-scroll">
+    <%= turbo_stream_from "user_#{Current.user.id}_dyna_form_window" %>
+    <div class="container pt-5">
+      <h2>Details</h2>
+      <% if @dyna_form.persisted? %>
+        <%= render partial: 'dyna_forms/dyna_form_with_inputs', locals: {dyna_form: @dyna_form} %>
+      <% else %>
+        <%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" do %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  window.toggleAdditionalAttributes = () => {
+    const ele = document.getElementById('form_input_input_type_id');
+    const selectedText = ele.options[ele.selectedIndex].text;
+    const targetEl = document.getElementById('form_input_additional_attributes');
+    const disableAndHide = !(selectedText === 'Option Select' || selectedText === 'Checkbox')
+    targetEl.disabled = disableAndHide;
+    targetEl.parentElement.hidden = disableAndHide;
+  }
+</script>

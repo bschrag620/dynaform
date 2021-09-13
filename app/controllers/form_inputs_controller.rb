@@ -1,10 +1,9 @@
 class FormInputsController < ApplicationController
-  before_action :set_form_input
+  before_action :redirect_if_not_logged_in, :set_request_objects
 
   def create
     @form_input = FormInput.new(form_input_params)
     @form_input.dyna_form_id = params[:dyna_form_id]
-    @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
     respond_to do |format|
       if params[:sample]
         format.turbo_stream {
@@ -20,14 +19,14 @@ class FormInputsController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             "new_form_input",
             partial: "form_inputs/form",
-            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: dyna_form}
+            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: @dyna_form}
           )}
       else
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             "new_form_input",
             partial: "form_inputs/form",
-            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: dyna_form}
+            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: @dyna_form}
           )}
       end
     end
@@ -36,7 +35,6 @@ class FormInputsController < ApplicationController
   def update
     @form_input.assign_attributes(form_input_params)
     @form_input.dyna_form_id = params[:dyna_form_id]
-    @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
     respond_to do |format|
       if params[:sample]
         format.turbo_stream {
@@ -46,27 +44,24 @@ class FormInputsController < ApplicationController
             locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, editing: true}
           )}
       elsif @form_input.save
-        @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             "form_input_#{@form_input.id}",
             partial: "form_inputs/sample",
-            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: dyna_form}
+            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: @dyna_form}
           )}
       else
         format.turbo_stream {
           render turbo_stream: turbo_stream.replace(
             "form_input_#{@form_input.id}",
             partial: "form_inputs/form",
-            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: dyna_form, editing: true}
+            locals: {form_input: @form_input, submitted_form_response: @submitted_form_response, dyna_form: @dyna_form, editing: true}
           )}
       end
     end
   end
 
   def edit
-    @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input)
-
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
@@ -79,7 +74,6 @@ class FormInputsController < ApplicationController
   end
 
   def destroy
-    binding.pry
     @form_input = Current.user.form_inputs.find(params[:id])
     @form_input.destroy
   end
@@ -89,11 +83,9 @@ class FormInputsController < ApplicationController
     params.require(:form_input).permit(:label, :helper_text, :input_type_id, :required, :additional_attributes)
   end
 
-  def dyna_form
-    @dyna_form ||= DynaForm.find(params[:dyna_form_id])
-  end
-
-  def set_form_input
+  def set_request_objects
     @form_input = FormInput.find_by(id: params[:id])
+    @dyna_form = DynaForm.find_by(id: params[:dyna_form_id])
+    @submitted_form_response = SubmittedFormResponse.new(form_input: @form_input) if @form_input
   end
 end

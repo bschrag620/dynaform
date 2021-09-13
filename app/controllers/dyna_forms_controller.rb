@@ -1,4 +1,5 @@
 class DynaFormsController < ApplicationController
+  before_action :redirect_if_not_logged_in, except: :index
   # login_url
   def new
   end
@@ -8,7 +9,7 @@ class DynaFormsController < ApplicationController
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
-          "dyna_form_window",
+          "user_#{Current.user.id}_dyna_form_window",
           partial: "dyna_forms/dyna_form_with_inputs",
           locals: {dyna_form: @dyna_form}
         )}

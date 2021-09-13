@@ -10,12 +10,29 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand">&nbsp;</a>
-        <%= button_to "Logout", logout_url, class: 'form-control', method: :delete if Current.user %>
+        <a class="navbar-brand">DynaForm</a>
+        <div class="navbar">
+          <div class="navbar-nav ms-auto">
+            <% if Current.user %>
+              <div class="nav-item">
+                <%= button_to "Logout", logout_url, class: 'form-control', method: :delete %>
+              </div>
+            <% else %>
+              <div class="nav-item px-3">
+                <%= button_to "Login", login_url, class: 'form-control nav-item', method: :get %>
+              </div>
+              <div class="nav-item">
+                <%= button_to "Sign up", signup_url, class: 'form-control nav-item', method: :get %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </nav>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
