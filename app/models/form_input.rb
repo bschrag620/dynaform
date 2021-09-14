@@ -6,17 +6,29 @@ class FormInput < ApplicationRecord
 
   validates :label, presence: true
   validate :has_additional_attributes?
+  validate :form_is_unlocked?
 
   after_create_commit do
     broadcast_append_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "dyna_form_#{dyna_form.id}_form_input_samples",
-      partial: 'form_inputs/sample', locals: {form_input: self, submitted_form_response: SubmittedFormResponse.new(form_input_id: id)}
+      partial: 'form_inputs/sample',
+      locals: {form_input: self, submitted_form_response: SubmittedFormResponse.new(form_input_id: id)}
     )
+
+    broadcast_replace_to "user_#{Current.user.id}_dyna_forms",
+      target: "dyna_form_#{dyna_form.id}",
+      partial: 'dyna_forms/dyna_form',
+      locals: {dyna_form: self.dyna_form} if Current.user
   end
   after_destroy_commit do
     broadcast_remove_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "form_input_#{id}_sample"
     )
+
+    broadcast_replace_to "user_#{Current.user.id}_dyna_forms",
+      target: "dyna_form_#{dyna_form.id}",
+      partial: 'dyna_forms/dyna_form',
+      locals: {dyna_form: self.dyna_form} if Current.user
   end
 
   def parsed_additional_attributes
@@ -30,5 +42,9 @@ class FormInput < ApplicationRecord
     return unless input_type.allows_additional_attributes?
 
     self.errors.add(:additional_attributes, "required for select option, checkbox, or radio select") unless additional_attributes.present?
+  end
+
+  def form_is_unlocked?
+    self.errors.add("DynaForm", "is locked, further changes are not permitted") if self.dyna_form.locked
   end
 end

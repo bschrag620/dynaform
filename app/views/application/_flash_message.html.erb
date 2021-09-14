@@ -1,0 +1,16 @@
+<% message ||= '' %>
+<% status ||= "success" %>
+  <% if message.present? %>
+  <div id="flash-message-container">
+    <div class="flash-message-controls">
+      <a href="#" onclick="javscript:document.getElementById('flash-message-container').hidden = true;">
+        <%= icon("x-lg") %>
+      </a>
+    </div>
+    <div class="flash-message-content">
+      <div class="flash-message text-center is-<%= status %>">
+        <%= message %>
+      </div>
+    </div>
+  </div>
+<% end %>

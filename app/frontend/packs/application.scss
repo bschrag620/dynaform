@@ -31,3 +31,41 @@
   display: inline;
   margin-left: .5em;
 }
+
+
+#flash-message-container {
+  position: fixed;
+  padding: .5em;
+  z-index: 100;
+  width: 100%;
+  display: table-row;
+
+  .flash-message {
+    font-size: 1.5em;
+    font-weight: 200;
+
+    &.is-error {
+      background: #ffb0b0;
+    }
+
+    &.is-success {
+      background: #c1f2bb;
+    }
+  }
+
+  .flash-message-content {
+    display: inline;
+    max-width: 40%;
+  }
+
+  .flash-message-controls {
+    position: absolute;
+    margin-left: 60%;
+    margin-top: .25em;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}

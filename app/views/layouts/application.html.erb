@@ -31,6 +31,13 @@
         </div>
       </div>
     </nav>
+    <% if Current.session %>
+      <%= turbo_stream_from dom_id(Current.session) %>
+      <%= turbo_frame_tag dom_id(Current.session) do %>
+        <div></div>
+        <%= render partial: "flash_message" %>
+      <% end %>
+    <% end %>
     <div class="container">
       <%= yield %>
     </div>
