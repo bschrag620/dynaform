@@ -3,7 +3,9 @@ class DynaForm < ApplicationRecord
   validates :description, presence: true
   validate :is_unlocked?
 
-  belongs_to :user
+  belongs_to :creator,
+    foreign_key: :user_id,
+    class_name: "User"
 
   has_many :form_inputs
 

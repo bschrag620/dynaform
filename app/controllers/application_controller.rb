@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :set_current
 
   def index
-    @dyna_forms = DynaForm.published
   end
 
   private

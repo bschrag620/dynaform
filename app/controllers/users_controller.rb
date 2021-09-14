@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :redirect_if_logged_in
 
+  layout "application_no_nav"
+
   # signup_url
   def new
     @user ||= User.new

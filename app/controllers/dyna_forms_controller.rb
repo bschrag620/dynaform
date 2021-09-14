@@ -1,19 +1,24 @@
 class DynaFormsController < ApplicationController
-  before_action :redirect_if_not_logged_in, except: :index
-  before_action :set_dyna_form, except: :index
+  before_action :redirect_if_not_logged_in, except: [:index, :published_surveys]
+  before_action :set_dyna_form, except: [:index, :published_surveys]
   # login_url
   def new
   end
 
   def details
+    partial_path = @dyna_form.published? ? "preview" : "dyna_form_with_inputs"
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
           "user_#{Current.user.id}_dyna_form_window",
-          partial: "dyna_forms/dyna_form_with_inputs",
+          partial: "dyna_forms/#{partial_path}",
           locals: {dyna_form: @dyna_form}
         )}
     end
+  end
+
+  def published_surveys
+    @dyna_forms = DynaForm.where(published: true)
   end
 
   def publish

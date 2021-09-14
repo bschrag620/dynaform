@@ -4,14 +4,16 @@
     <p>
       <%= dyna_form.description %>
     </p>
-      <div class="button-row-container">
-        <% if dyna_form.published %>
-          <%= button_to "Unpublish", {action: :unpublish, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row"} %>
-        <% else %>
-          <%= button_to "Publish!", {action: :publish, id: dyna_form.id, controller: :dyna_forms}, {title: dyna_form.form_inputs.empty? ? "Form inputs are required to publish" : "", class: "button-row", disabled: dyna_form.form_inputs.empty?} %>
-        <% end %>
-        <%= button_to "See details", {action: :details, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row"} %>
-        <%= button_to "Delete", {action: :destroy, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row", method: :delete} %>
-      </div>
+      <% if dyna_form.creator == Current.user %>
+        <div class="button-row-container">
+          <% if dyna_form.published %>
+            <%= button_to "Unpublish", {action: :unpublish, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row"} %>
+          <% else %>
+            <%= button_to "Publish!", {action: :publish, id: dyna_form.id, controller: :dyna_forms}, {title: dyna_form.form_inputs.empty? ? "Form inputs are required to publish" : "", class: "button-row", disabled: dyna_form.form_inputs.empty?} %>
+          <% end %>
+          <%= button_to "See details", {action: :details, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row"} %>
+          <%= button_to "Delete", {action: :destroy, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row", method: :delete} %>
+        </div>
+      <% end %>
   </div>
 <% end %>

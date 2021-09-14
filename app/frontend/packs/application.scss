@@ -69,3 +69,17 @@
     color: black;
   }
 }
+
+.nav-item.active {
+  font-weight: 600;
+}
+
+h1.header-insight {
+  font-size: 5em;
+  font-weight: 300;
+}
+
+a.no-decor {
+  text-decoration: none;
+  color: black;
+}

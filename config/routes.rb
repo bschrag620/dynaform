@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post "/dyna_forms/:id/publish", to: "dyna_forms#publish", as: :dyna_form_publish
   post "/dyna_forms/:id/unpublish", to: "dyna_forms#unpublish", as: :dyna_form_unpublish
   post "/dyna_forms/:id/details", to: "dyna_forms#details", as: :dyna_form_details
+  get "/published_surveys", to: "dyna_forms#published_surveys", as: :published_surveys
 
   delete "form_inputs/:id", to: "form_inputs#destroy", as: :form_input_delete
   post "form_inputs/:id/edit",to: "form_inputs#edit", as: :form_input_edit

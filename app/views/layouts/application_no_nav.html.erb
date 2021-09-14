@@ -10,7 +10,6 @@
   </head>
 
   <body>
-    <%= render partial: "navbar" %>
     <% if Current.session %>
       <%= turbo_stream_from dom_id(Current.session) %>
       <%= turbo_frame_tag dom_id(Current.session) do %>
@@ -19,6 +18,7 @@
       <% end %>
     <% end %>
     <div class="container">
+      <h1 class="header-insight text-center"><%= link_to "DynaForm", root_url, class: 'no-decor' %></h1>
       <%= yield %>
     </div>
   </body>

@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   before_action :redirect_if_logged_in, except: :delete
 
+  layout "application_no_nav"
+
   # login_url
   def new
   end
