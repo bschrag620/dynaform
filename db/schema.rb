@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_211834) do
+ActiveRecord::Schema.define(version: 2021_09_15_023641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 2021_09_13_211834) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "dyna_form_id"
+    t.boolean "completed", default: false
+    t.datetime "complete_date"
     t.index ["dyna_form_id"], name: "index_submitted_forms_on_dyna_form_id"
   end
 
