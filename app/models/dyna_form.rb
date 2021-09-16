@@ -46,24 +46,46 @@ class DynaForm < ApplicationRecord
   #
   # @return [ActiveRecord_Collection::DynaForm]
   #
-  def self.select_for_result_table(id)
+  def self.submission_data(id, completed)
     DynaForm
       .select("submitted_forms.id, submitted_form_responses.value, form_inputs.label, submitted_forms.complete_date, submitted_form_responses.form_input_id as header_id")
       .joins(submitted_forms: [submitted_form_responses: :form_input])
       .where(dyna_forms: {id: id})
-      .where.not(submitted_forms: {complete_date: nil})
+      .where.not(submitted_forms: {completed: completed})
       .order("submitted_forms.created_at desc, form_inputs.display_order")
   end
 
   #
-  # A feeble attempt at a pivot table of submitted data for a form - also return header column data
+  # Returns the pivoted data for completed form submissions
   #
   # @return [Array<Array, Array>]
   #
-  def result_pivot_table
-    data = DynaForm.select_for_result_table(id)
+  def completed_pivot_table
+    data = DynaForm.submission_data(id, true)
     headers = form_inputs.order(:display_order).pluck(:label, :id)
-    pivoted_data = [].tap do |new_data|
+    [pivot_data(data), headers]
+  end
+
+  #
+  # Returns the pivoted data for saved form submissions
+  #
+  # @return [Array<Array, Array>]
+  #
+  def pending_pivot_table
+    data = DynaForm.submission_data(id, false)
+    headers = form_inputs.order(:display_order).pluck(:label, :id)
+    [pivot_data(data), headers]
+  end
+
+  #
+  # Pivots the data for rendering in a results table
+  #
+  # @param data [Array]
+  #
+  # @return [Array]
+  #
+  def pivot_data(data)
+    [].tap do |new_data|
       new_row = {}
       data.each do |row|
         if new_row.has_key?(row.header_id)
@@ -75,7 +97,6 @@ class DynaForm < ApplicationRecord
 
       new_data << new_row
     end
-    [pivoted_data, headers]
   end
 
   def publish
