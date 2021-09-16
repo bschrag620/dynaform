@@ -5,8 +5,6 @@ class SubmittedForm < ApplicationRecord
 
   attr_accessor :all_responses_valid
 
-  scope :are_completed, -> { where(completed: true) }
-
   #
   # Marks the submitted form as completed
   #

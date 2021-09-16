@@ -65,14 +65,13 @@ class DynaFormsController < ApplicationController
   end
 
   def results
-    @submitted_data, @headers = @dyna_form.completed_pivot_table
-    @pending_data, @headers = @dyna_form.pending_pivot_table
+    @submitted_data, @headers = @dyna_form.result_pivot_table
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "user_dyna_form_window",
           partial: "dyna_forms/results",
-          locals: {submitted_data: @submitted_data, pending_data: @pending_data, headers: @headers}
+          locals: {submitted_data: @submitted_data, headers: @headers}
         )
       end
     end
