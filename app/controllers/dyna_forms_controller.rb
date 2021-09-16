@@ -8,7 +8,6 @@ class DynaFormsController < ApplicationController
   end
 
   def details
-    binding.pry
     partial_path = @dyna_form.locked? ? "preview" : "dyna_form_with_inputs"
     respond_to do |format|
       format.turbo_stream {

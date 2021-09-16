@@ -5,7 +5,7 @@ export const TriggerBuild = (id, auth_token) => {
     if (resp.data.status === 204) {
       window.location =`/submitted_forms/${resp.data.submitted_form_id}`;
     } else {
-      document.getElementById('watch-container').innerHTML(resp.data.msg)
+      document.getElementById('watch-container').innerHTML = resp.data.msg;
     }
   });
 }

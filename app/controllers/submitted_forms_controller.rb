@@ -5,7 +5,9 @@ class SubmittedFormsController < ApplicationController
 
   def build_survey
     @dyna_form = DynaForm.published.find_by(id: params[:dyna_form_id])
-    if @dyna_form.present?
+    if Current.session&.user == @dyna_form.creator
+      render json: {msg: "Sorry, creators are not permitted to take their own surveys no matter how awesome they might be. :-(", status: 404}
+    elsif @dyna_form.present?
       @submitted_form = SubmittedForm.create!(dyna_form: @dyna_form)
       @form_responses = @dyna_form.form_inputs.order(:display_order).map { |form_input| SubmittedFormResponse.create!(submitted_form: @submitted_form, form_input: form_input) }
       render json: {submitted_form_id: @submitted_form.id, status: 204}
