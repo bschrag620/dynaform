@@ -10,7 +10,7 @@
     <%= turbo_stream_from "user_#{Current.user.id}_dyna_forms" %>
     <div class="container pt-5">
       <h2>Start a new DynaForm</h2>
-      <%= turbo_frame_tag "dyna_form_form" do %>
+      <%= turbo_frame_tag "new_dyna_form" do %>
         <%= render "dyna_forms/form", dyna_form: @dyna_form %>
       <% end %>
     </div>

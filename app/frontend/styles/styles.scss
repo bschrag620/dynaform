@@ -8,7 +8,6 @@
 }
 
 .clickable:hover {
-  background-color: lightgray;
   cursor: pointer;
 }
 
@@ -32,13 +31,16 @@
   margin-left: .5em;
 }
 
+.is-warning {
+  background: #edc558;
+}
 
 #flash-message-container {
   position: fixed;
-  padding: .5em;
   z-index: 100;
   width: 100%;
   display: table-row;
+  top: 0;
 
   .flash-message {
     font-size: 1.5em;
@@ -51,6 +53,10 @@
     &.is-success {
       background: #c1f2bb;
     }
+
+    &.is-warning {
+      background: #edc558;
+    }
   }
 
   .flash-message-content {
@@ -61,7 +67,7 @@
   .flash-message-controls {
     position: absolute;
     margin-left: 60%;
-    margin-top: .25em;
+    margin-top: 0em;
   }
 
   a {
@@ -77,9 +83,19 @@
 h1.header-insight {
   font-size: 5em;
   font-weight: 300;
+
+  &--md {
+    font-size: 3em;
+    font-weight: 300;
+  }
 }
 
 a.no-decor {
   text-decoration: none;
   color: black;
+}
+
+.fixed-bottom-padded {
+  padding-right: 10%;
+  padding-bottom: 2%;
 }

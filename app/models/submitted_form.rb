@@ -3,15 +3,17 @@ class SubmittedForm < ApplicationRecord
 
   has_many :submitted_form_responses
 
+  attr_accessor :all_responses_valid
+
   #
   # Marks the submitted form as completed
   #
   # @return [void]
   #
-  def complete!
-    return if completed?
+  def complete
+    return false unless @all_responses_valid
 
-    update!(completed: true, complete_date: Time.now) if is_complete?
+    update(completed: true, complete_date: Time.now) unless completed?
   end
 
   #
@@ -19,9 +21,9 @@ class SubmittedForm < ApplicationRecord
   #
   # @return [Boolean]
   #
-  def is_complete?
-    submitted_form_responses.reduce(true) do |acc, sfr|
-      sfr.save
+  def process_submissions(submitted_responses = submitted_form_responses, with_dyna_form_validation = true)
+    @all_responses_valid = submitted_responses.reduce(true) do |acc, sfr|
+      sfr.save(with_dyna_form_validation)
       acc && sfr.errors.empty?
     end
   end

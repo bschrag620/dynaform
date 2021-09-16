@@ -13,13 +13,14 @@
     <%= render partial: "navbar" %>
     <% if Current.session %>
       <%= turbo_stream_from dom_id(Current.session) %>
-      <%= turbo_frame_tag dom_id(Current.session) do %>
-        <div></div>
-        <%= render partial: "flash_message" %>
-      <% end %>
+    <% end %>
+    <%= turbo_frame_tag "flash_message" do %>
+      <%= render partial: "flash_message" %>
+      <div></div>
     <% end %>
     <div class="container">
       <%= yield %>
     </div>
   </body>
+  <%= render partial: "footer" %>
 </html>

@@ -11,10 +11,14 @@ class SubmittedFormResponse < ApplicationRecord
   #
   # @return [Boolean]
   #
-  def save
-    result = super
-    dyna_form_validate!
+  def save(with_dyna_form_validation = true)
+    result = super()
+    dyna_form_validate! if with_dyna_form_validation
     result
+  end
+
+  def value=(val)
+    super(val.join(',')) rescue super(val)
   end
 
   def dyna_form_validate!

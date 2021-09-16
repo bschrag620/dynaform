@@ -98,13 +98,15 @@ class InputType < ApplicationRecord
     # @return [void]
     #
     def validate_required(**params)
-      submitted_form_response.errors.add("Input", "is required.") unless submitted_form_response.value.present?
+      submitted_form_response.errors.add("Input", "is required") unless submitted_form_response.value.present?
     end
   end
 
-  class SelectOption < BaseInputType;  end;
+  class OptionSelect < BaseInputType;  end;
 
-  class Textarea < BaseInputType;  end;
+  class TextArea < BaseInputType;  end;
+
+  class Checkbox < BaseInputType;  end;
 
   class Text < BaseInputType
 

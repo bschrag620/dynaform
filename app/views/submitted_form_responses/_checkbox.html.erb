@@ -1,7 +1,8 @@
 <% sample ||= false %>
+<% val_arr = submitted_form_response.value.split(',') %>
 <div class="form-group">
   <%= render partial: "submitted_form_responses/label_and_helper", locals: {form_input: submitted_form_response.form_input} %>
   <% submitted_form_response.form_input.parsed_additional_attributes.each do |attr| %>
-    <%= check_box_tag "#{submitted_form_response.id}[]", attr %><%= attr %><br>
+    <%= check_box_tag "#{submitted_form_response.id}[]", attr, val_arr.include?(attr) %><%= attr %><br>
   <% end %>
 </div>

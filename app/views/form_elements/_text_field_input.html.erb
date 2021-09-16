@@ -3,7 +3,7 @@
 
 <div class="form-group" <%= 'hidden' if hidden %> >
   <% invalid = obj.errors.include?(field) %>
-  <%= form_obj.label field%><br>
+  <%= form_obj.label field %><br>
   <%= form_obj.text_field field, class: "form-control #{'is-invalid' if invalid}", disabled: disabled %><br>
   <% if invalid %>
     <div class="text-danger post-input-hint">

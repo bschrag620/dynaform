@@ -81,7 +81,7 @@ class FormInputsController < ApplicationController
 
   private
   def form_input_params
-    params.require(:form_input).permit(:label, :helper_text, :input_type_id, :required, :additional_attributes)
+    params.require(:form_input).permit(:label, :helper_text, :input_type_id, :required, :additional_attributes, :display_order)
   end
 
   def set_request_objects

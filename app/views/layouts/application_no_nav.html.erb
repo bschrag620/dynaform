@@ -12,14 +12,12 @@
   <body>
     <% if Current.session %>
       <%= turbo_stream_from dom_id(Current.session) %>
-      <%= turbo_frame_tag dom_id(Current.session) do %>
-        <div></div>
-        <%= render partial: "flash_message" %>
-      <% end %>
     <% end %>
+    <%= render partial: "flash_message" %>
     <div class="container">
       <h1 class="header-insight text-center"><%= link_to "DynaForm", root_url, class: 'no-decor' %></h1>
       <%= yield %>
     </div>
   </body>
+  <%= render partial: "footer" %>
 </html>

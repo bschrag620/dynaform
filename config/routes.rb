@@ -12,10 +12,15 @@ Rails.application.routes.draw do
   post "/dyna_forms/:id/publish", to: "dyna_forms#publish", as: :dyna_form_publish
   post "/dyna_forms/:id/unpublish", to: "dyna_forms#unpublish", as: :dyna_form_unpublish
   post "/dyna_forms/:id/details", to: "dyna_forms#details", as: :dyna_form_details
+  get "/dyna_forms/:id/take_survey", to: "dyna_forms#take_survey", as: :take_survey
   get "/published_surveys", to: "dyna_forms#published_surveys", as: :published_surveys
 
   delete "form_inputs/:id", to: "form_inputs#destroy", as: :form_input_delete
   post "form_inputs/:id/edit",to: "form_inputs#edit", as: :form_input_edit
+
+  post "submitted_forms/build_survey", to: "submitted_forms#build_survey"
+  post "submitted_forms/:id/save_progress", to: "submitted_forms#save_progress", as: :submitted_form_response_save_progress
+  resources :submitted_forms, only: [:show]
 
   resources :dyna_forms do
     resources :form_inputs, except: [:destroy]

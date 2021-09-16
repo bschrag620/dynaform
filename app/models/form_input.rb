@@ -8,6 +8,8 @@ class FormInput < ApplicationRecord
   validate :has_additional_attributes?
   validate :form_is_unlocked?
 
+  before_create :set_display_order
+
   after_create_commit do
     broadcast_append_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "dyna_form_#{dyna_form.id}_form_input_samples",
@@ -46,5 +48,10 @@ class FormInput < ApplicationRecord
 
   def form_is_unlocked?
     self.errors.add("DynaForm", "is locked, further changes are not permitted") if self.dyna_form.locked
+  end
+
+  def set_display_order
+    dyna_form.form_inputs.reload
+    assign_attributes(display_order: dyna_form.form_inputs.length + 1)
   end
 end

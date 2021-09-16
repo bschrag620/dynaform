@@ -1,6 +1,8 @@
 class DynaFormsController < ApplicationController
-  before_action :redirect_if_not_logged_in, except: [:index, :published_surveys]
-  before_action :set_dyna_form, except: [:index, :published_surveys]
+  before_action :redirect_if_not_logged_in, except: [:index, :published_surveys, :take_survey]
+  before_action :set_dyna_form, except: [:index, :published_surveys, :new, :create]
+
+  layout "application_no_nav", only: :take_survey
   # login_url
   def new
   end
@@ -17,6 +19,10 @@ class DynaFormsController < ApplicationController
     end
   end
 
+  def take_survey
+    @dyna_form = DynaForm.published.find_by(id: params[:id])
+  end
+
   def published_surveys
     @dyna_forms = DynaForm.where(published: true)
   end
@@ -27,15 +33,13 @@ class DynaFormsController < ApplicationController
       format.turbo_stream do
         if updateable && @dyna_form.publish
           render turbo_stream: turbo_stream.replace(
-            "session_#{Current.session.id}",
-            target: "flash_message",
+            "flash_message",
             partial: "flash_message",
             locals: {message: "#{@dyna_form.title} has been published!", status: "success"}
           )
         else
           render turbo_stream: turbo_stream.replace(
-            "session_#{Current.session.id}",
-            target: "flash_message",
+            "flash_message",
             partial: "flash_message",
             locals: {message: "#{@dyna_form.title} cannot be published.", status: "error"}
           )
@@ -47,15 +51,13 @@ class DynaFormsController < ApplicationController
   def unpublish
     if @dyna_form.unpublish
       render turbo_stream: turbo_stream.replace(
-        "session_#{Current.session.id}",
-        target: "flash_message",
+        "flash_message",
         partial: "flash_message",
         locals: {message: "#{@dyna_form.title} has been unpublished.", status: "success"}
       )
     else
       render turbo_stream: turbo_stream.replace(
-        "session_#{Current.session.id}",
-        target: "flash_message",
+        "flash_message",
         partial: "flash_message",
         locals: {message: "#{@dyna_form.title} cannot be unpublished", status: "error"}
       )
@@ -63,6 +65,7 @@ class DynaFormsController < ApplicationController
   end
 
   def create
+    @dyna_form = Current.user.dyna_forms.new(dyna_form_params)
     respond_to do |format|
       if @dyna_form.save
         format.turbo_stream {render layout: false}
@@ -78,7 +81,7 @@ class DynaFormsController < ApplicationController
   end
 
   def destroy
-    dyna_form.destroy
+    @dyna_form.destroy
   end
 
   private
@@ -87,6 +90,6 @@ class DynaFormsController < ApplicationController
   end
 
   def set_dyna_form
-    @dyna_form = Current.user.dyna_forms.find(params[:id])
+    @dyna_form = Current.user.dyna_forms.find(params[:id]) if Current.user
   end
 end
