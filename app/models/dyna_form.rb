@@ -20,13 +20,18 @@ class DynaForm < ApplicationRecord
   end
 
   after_update_commit do
+    partial_path = locked? ? "preview" : "dyna_form_with_inputs"
     broadcast_replace_to "user_#{Current.user.id}_dyna_forms" if Current.user
+    broadcast_replace_to "session_#{Current.session.id}",
+        target: "user_dyna_form_window",
+        partial: "dyna_forms/#{partial_path}",
+        locals: {dyna_form: self}
   end
 
   after_destroy_commit do
     if Current.user
       broadcast_remove_to "user_#{Current.user.id}_dyna_forms"
-      broadcast_remove_to "dyna_form_window"
+      broadcast_remove_to "session_#{Current.session.id}"
     end
   end
 

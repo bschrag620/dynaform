@@ -8,11 +8,12 @@ class DynaFormsController < ApplicationController
   end
 
   def details
-    partial_path = @dyna_form.published? ? "preview" : "dyna_form_with_inputs"
+    binding.pry
+    partial_path = @dyna_form.locked? ? "preview" : "dyna_form_with_inputs"
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
-          "dyna_form_window",
+          "user_dyna_form_window",
           partial: "dyna_forms/#{partial_path}",
           locals: {dyna_form: @dyna_form}
         )}
@@ -69,7 +70,7 @@ class DynaFormsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          "dyna_form_window",
+          "user_dyna_form_window",
           partial: "dyna_forms/results",
           locals: {submitted_data: @submitted_data, headers: @headers}
         )

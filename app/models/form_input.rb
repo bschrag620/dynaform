@@ -10,7 +10,11 @@ class FormInput < ApplicationRecord
 
   before_create :set_display_order
 
+  before_update :form_is_unlocked?
+
   after_create_commit do
+    dyna_form.form_inputs.reload
+
     broadcast_append_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "dyna_form_#{dyna_form.id}_form_input_samples",
       partial: 'form_inputs/sample',
@@ -23,6 +27,8 @@ class FormInput < ApplicationRecord
       locals: {dyna_form: self.dyna_form} if Current.user
   end
   after_destroy_commit do
+    dyna_form.form_inputs.reload
+
     broadcast_remove_to("dyna_form_#{dyna_form.id}_form_input_samples",
       target: "form_input_#{id}_sample"
     )
