@@ -51,7 +51,7 @@ class DynaForm < ApplicationRecord
       .select("submitted_forms.id, submitted_form_responses.value, form_inputs.label, submitted_forms.complete_date, submitted_form_responses.form_input_id as header_id")
       .joins(submitted_forms: [submitted_form_responses: :form_input])
       .where(dyna_forms: {id: id})
-      .where.not(submitted_forms: {completed: completed})
+      .where(submitted_forms: {completed: completed})
       .order("submitted_forms.created_at desc, form_inputs.display_order")
   end
 
