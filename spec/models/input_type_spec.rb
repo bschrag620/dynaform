@@ -11,6 +11,7 @@ RSpec.describe InputType, type: :model do
     @submitted_form = FactoryBot.create(:submitted_form, dyna_form: @dyna_form)
     @submitted_text_response = SubmittedFormResponse.new(form_input: @text_input, submitted_form: @submitted_form)
     @submitted_email_response = SubmittedFormResponse.new(form_input: @email_input, value: "rspec@", submitted_form: @submitted_form)
+    @submitted_blank_email_response = SubmittedFormResponse.new(form_input: @email_input, value: "", submitted_form: @submitted_form)
     @submitted_required_email_response = SubmittedFormResponse.new(form_input: @required_email_input, value: "rspec@", submitted_form: @submitted_form)
     @submitted_phone_number_response = SubmittedFormResponse.new(form_input: @phone_input, value: "234-555-1230", submitted_form: @submitted_form)
   end
@@ -29,8 +30,12 @@ RSpec.describe InputType, type: :model do
     end
 
     context 'email' do
+      it 'should not be valid when the value is not empty and not required' do
+        expect(@submitted_email_response.is_dyna_form_valid?).to be false
+      end
+
       it 'should be valid when the value is empty and not required' do
-        expect(@submitted_email_response.is_dyna_form_valid?).to be true
+        expect(@submitted_blank_email_response.is_dyna_form_valid?).to be true
       end
 
       it 'should not be valid when the value is empty and required' do
