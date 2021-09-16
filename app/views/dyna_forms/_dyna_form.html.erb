@@ -12,7 +12,7 @@
     <div class="button-row-container">
       <% if dyna_form.creator == Current.user %>
         <% if dyna_form.locked %>
-          <%= button_to "Results (#{dyna_form.submitted_forms.count})", dyna_form_results_path(dyna_form), class: "button-row btn btn-outline-info" unless @suppress_links %>
+          <%= button_to "Results (#{dyna_form.submitted_forms.are_completed.count})", dyna_form_results_path(dyna_form), class: "button-row btn btn-outline-info" unless @suppress_links %>
         <% end %>
         <% if dyna_form.published? %>
           <%= button_to "Unpublish", {action: :unpublish, id: dyna_form.id, controller: :dyna_forms}, {class: "button-row btn btn-warning"} %>
@@ -25,5 +25,6 @@
         <%= link_to "Take Survey", take_survey_path(dyna_form), class: "btn btn-primary button-row", target: "_blank" %>
       <% end %>
     </div>
+    <i>Author: <%= dyna_form.creator.email %></i>
   </div>
 <% end %>
