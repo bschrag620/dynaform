@@ -11,6 +11,7 @@
             <p>
               <%= dyna_form.description %>
             </p>
+            <%= turbo_stream_from "#{dom_id(dyna_form)}_form_input_samples" %>
             <%= turbo_frame_tag "#{dom_id(dyna_form)}_form_input_samples" do %>
               <% dyna_form.form_inputs.each do |form_input| %>
                 <%= render partial: "form_inputs/sample", locals: {form_input: form_input, submitted_form_response: SubmittedFormResponse.new(form_input_id: form_input.id), editing: dyna_form.published?} %>
