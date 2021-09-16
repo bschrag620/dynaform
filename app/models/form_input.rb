@@ -33,9 +33,23 @@ class FormInput < ApplicationRecord
       locals: {dyna_form: self.dyna_form} if Current.user
   end
 
+  #
+  # Helper method for parsing additional attributes into a json struct
+  #
+  # @return [Array]
+  #
   def parsed_additional_attributes
     current_attrs = additional_attributes || ''
     JSON.parse(current_attrs) rescue current_attrs.split(',')
+  end
+
+  #
+  # Override default additional_attributes= to convert comma-separated into a santized array
+  #
+  # @retiurn [void]
+  #
+  def additional_attributes=(val = '')
+    super val.split(',').map {|v| v.strip }.join(',')
   end
 
   private

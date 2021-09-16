@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-lg-6 vertical-scroll">
     <%= turbo_stream_from "user_#{Current.user.id}_dyna_forms" %>
-    <div class="container pt-5">
+    <div class="container py-5">
       <h2>Start a new DynaForm</h2>
       <%= turbo_frame_tag "new_dyna_form" do %>
         <%= render "dyna_forms/form", dyna_form: @dyna_form %>
@@ -16,7 +16,7 @@
     </div>
 
 
-    <div class="container pt-5">
+    <div class="container py-5">
       <h2>My DynaForms</h2>
       <%= turbo_frame_tag "user_#{Current.user.id}_dyna_forms" do %>
         <%= render @dyna_forms %>
@@ -25,11 +25,9 @@
   </div>
 
   <div class="col-lg-6 vertical-scroll">
-    <%= turbo_stream_from "user_#{Current.user.id}_dyna_form_window" %>
-    <div class="container pt-5">
-      <h2>Details</h2>
-      <%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" %>
-    </div>
+    <%= turbo_frame_tag "dyna_form_window" do %>
+
+    <% end %>
   </div>
 </div>
 

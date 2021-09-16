@@ -6,10 +6,12 @@ RSpec.describe InputType, type: :model do
     @dyna_form = FactoryBot.create(:dyna_form, creator: @user)
     @text_input = FactoryBot.create(:form_input, :required, dyna_form: @dyna_form)
     @email_input = FactoryBot.create(:form_input, :email, dyna_form: @dyna_form)
-    @phone_input = FactoryBot.create(:form_input, :phone_number, dyna_form: @dyna_form)
+    @required_email_input = FactoryBot.create(:form_input, :email, :required, dyna_form: @dyna_form)
+    @phone_input = FactoryBot.create(:form_input, :phone_number, :required, dyna_form: @dyna_form)
     @submitted_form = FactoryBot.create(:submitted_form, dyna_form: @dyna_form)
     @submitted_text_response = SubmittedFormResponse.new(form_input: @text_input, submitted_form: @submitted_form)
     @submitted_email_response = SubmittedFormResponse.new(form_input: @email_input, value: "rspec@", submitted_form: @submitted_form)
+    @submitted_required_email_response = SubmittedFormResponse.new(form_input: @required_email_input, value: "rspec@", submitted_form: @submitted_form)
     @submitted_phone_number_response = SubmittedFormResponse.new(form_input: @phone_input, value: "234-555-1230", submitted_form: @submitted_form)
   end
 
@@ -27,14 +29,18 @@ RSpec.describe InputType, type: :model do
     end
 
     context 'email' do
-      it 'should not be valid when the value is empty' do
-        expect(@submitted_email_response.is_dyna_form_valid?).to be false
+      it 'should be valid when the value is empty and not required' do
+        expect(@submitted_email_response.is_dyna_form_valid?).to be true
+      end
+
+      it 'should not be valid when the value is empty and required' do
+        expect(@submitted_required_email_response.is_dyna_form_valid?).to be false
       end
 
       it 'should be valid when it is not empty' do
-        @submitted_email_response.value = 'rspec@factory.com'
-        @submitted_email_response.errors.clear
-        expect(@submitted_email_response.is_dyna_form_valid?).to be true
+        @submitted_required_email_response.value = 'rspec@factory.com'
+        @submitted_required_email_response.errors.clear
+        expect(@submitted_required_email_response.is_dyna_form_valid?).to be true
       end
     end
 

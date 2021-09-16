@@ -116,6 +116,8 @@ class InputType < ApplicationRecord
     # @return [void]
     #
     def validate_phone_number(**params)
+      return unless submitted_form_response.required?
+
       submitted_form_response.errors.add("Phone number", "must contain only number") if submitted_form_response.value.match?(/[^0-9]/)
       submitted_form_response.errors.add("Phone number", "is not correct length") unless submitted_form_response.value.length == 10
     end
@@ -126,6 +128,8 @@ class InputType < ApplicationRecord
     # @return [void]
     #
     def validate_email(**params)
+      return unless submitted_form_response.required?
+
       submitted_form_response.errors.add("Email", "is not a valid format") unless submitted_form_response.value.match?(URI::MailTo::EMAIL_REGEXP)
     end
   end

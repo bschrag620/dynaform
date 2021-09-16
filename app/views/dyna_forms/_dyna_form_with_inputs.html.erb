@@ -1,4 +1,7 @@
-<%= turbo_frame_tag "user_#{Current.user.id}_dyna_form_window" do %>
+<%= turbo_frame_tag "dyna_form_window" do %>
+  <div class="container py-5">
+    <h2>Form Builder</h2>
+  </div>
   <%= turbo_frame_tag dom_id(dyna_form) do %>
     <div class="card card-body">
       <div class="row">
@@ -8,12 +11,9 @@
             <p>
               <%= dyna_form.description %>
             </p>
-            <%= turbo_stream_from "#{dom_id(dyna_form)}_form_input_samples" %>
             <%= turbo_frame_tag "#{dom_id(dyna_form)}_form_input_samples" do %>
               <% dyna_form.form_inputs.each do |form_input| %>
-                <div class="container">
-                  <%= render partial: "form_inputs/sample", locals: {form_input: form_input, submitted_form_response: SubmittedFormResponse.new(form_input_id: form_input.id), editing: dyna_form.published?} %>
-                </div>
+                <%= render partial: "form_inputs/sample", locals: {form_input: form_input, submitted_form_response: SubmittedFormResponse.new(form_input_id: form_input.id), editing: dyna_form.published?} %>
               <% end %>
             <% end %>
           </div>

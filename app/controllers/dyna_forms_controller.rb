@@ -12,7 +12,7 @@ class DynaFormsController < ApplicationController
     respond_to do |format|
       format.turbo_stream {
         render turbo_stream: turbo_stream.replace(
-          "user_#{Current.user.id}_dyna_form_window",
+          "dyna_form_window",
           partial: "dyna_forms/#{partial_path}",
           locals: {dyna_form: @dyna_form}
         )}
@@ -61,6 +61,19 @@ class DynaFormsController < ApplicationController
         partial: "flash_message",
         locals: {message: "#{@dyna_form.title} cannot be unpublished", status: "error"}
       )
+    end
+  end
+
+  def results
+    @submitted_data, @headers = @dyna_form.result_pivot_table
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "dyna_form_window",
+          partial: "dyna_forms/results",
+          locals: {submitted_data: @submitted_data, headers: @headers}
+        )
+      end
     end
   end
 

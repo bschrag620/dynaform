@@ -32,7 +32,7 @@ class SubmittedFormsController < ApplicationController
             render turbo_stream: [
               turbo_stream.replace(@submitted_form,
                 partial: "submitted_forms/submission_form",
-                locals: {id: params[:id], ordered_inputs: @submitted_form.submitted_form_responses}
+                locals: {id: params[:id], ordered_inputs: @submitted_form.submitted_form_responses, completed: true}
               ),
               turbo_stream.replace(
                 "flash_message",
