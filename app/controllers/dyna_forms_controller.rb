@@ -1,6 +1,6 @@
 class DynaFormsController < ApplicationController
   before_action :redirect_if_not_logged_in, except: [:index, :published_surveys, :take_survey]
-  before_action :set_dyna_form, except: [:index, :published_surveys, :new, :create]
+  before_action :set_dyna_form, except: [:index, :published_surveys, :new, :create, :take_survey]
 
   layout "application_no_nav", only: :take_survey
   # login_url
