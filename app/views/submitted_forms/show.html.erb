@@ -10,9 +10,7 @@
       <% end %>
       <h1><%= @submitted_form.dyna_form.title %></h1>
       <p><%= @submitted_form.dyna_form.description %></p>
-        <%= turbo_frame_tag @submitted_form do %>
           <%= render partial: "submission_form", locals: {ordered_inputs: @ordered_inputs, id: @submitted_form.id, completed: @submitted_form.completed} %>
-        <% end %>
       </div>
   </div>
 </div>
